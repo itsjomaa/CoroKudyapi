@@ -166,35 +166,6 @@ body {
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Minimalist Hero CTA */
-.hero-cta-wrap {
-    margin-top: 28px;
-}
-
-.hero-cta {
-    display: inline-block;
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 0.88rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding: 11px 28px;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 30px;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    transition: all 0.3s ease;
-    opacity: 0.9;
-}
-
-.hero-cta:hover {
-    background: #ffffff;
-    color: #141414;
-    border-color: #ffffff;
-    opacity: 1;
-    transform: translateY(-2px);
-}
-
 /* ==========================================================================
    Home & About Us Section (Pure Minimalist)
    ========================================================================== */
