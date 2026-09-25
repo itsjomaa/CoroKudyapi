@@ -9,17 +9,17 @@
     <!-- SEO & Metadata -->
     <title>404 - Page Not Found | Coro Kudyapi</title>
     <meta name="description"
-        content="The page you requested could not be found. Explore our choir performances, history, FAQ, or contact Coro Kudyapi.">
+        content="The page you requested could not be found. Return to Coro Kudyapi home.">
     <meta name="robots" content="noindex, follow">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="images/logo-kudyapi.svg">
     <link rel="alternate icon" href="images/Logo-Kudyapi.png" type="image/png">
 
-    <!-- Preconnect & Fonts -->
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&family=Oswald:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 
@@ -40,143 +40,107 @@
 </head>
 
 <body>
-    <!-- Skip to Main Content for Accessibility -->
+    <!-- Skip to Content -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Sub-Header & Navigation -->
-    <header class="sub-header" role="banner" style="min-height: 35vh;">
-        <nav class="nav-bar" aria-label="Main Navigation">
-            <a href="index.html" class="brand-logo" aria-label="Coro Kudyapi Home">
-                <img src="images/logo-kudyapi.svg" alt="Coro Kudyapi Emblem" width="44" height="44">
-                <span>Coro Kudyapi</span>
-            </a>
+    <!-- Sub-Header (Original Minimalist Design) -->
+    <header class="sub-header" role="banner" style="min-height: 40vh;">
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mainNav">
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
 
-            <button class="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primaryNav">
-                <i class="fa-solid fa-bars" aria-hidden="true"></i>
-            </button>
-
-            <div class="nav-links" id="primaryNav">
-                <ul>
-                    <li><a class="nav-menu1" href="index.html">Home</a></li>
-                    <li><a class="nav-menu1" href="news.html">News & Concerts</a></li>
-                    <li><a class="nav-menu1" href="index.html#about">About Us</a></li>
-                    <li><a class="nav-menu1" href="faq.html">FAQ</a></li>
-                    <li><a class="nav-menu1" href="contact.html">Contact & Auditions</a></li>
-                </ul>
-            </div>
-            <div class="nav-overlay" aria-hidden="true"></div>
+        <nav class="nav-links" id="mainNav" aria-label="Main Navigation">
+            <ul>
+                <li><a class="nav-menu1" href="index.html">Home</a></li>
+                <li><a class="nav-menu1" href="news.html">News</a></li>
+                <li><a class="nav-menu1" href="index.html#about">About Us</a></li>
+                <li><a class="nav-menu1" href="faq.html">FAQ</a></li>
+                <li><a class="nav-menu1" href="contact.html">Contact</a></li>
+            </ul>
         </nav>
 
-        <div class="subheader-content" style="padding-bottom: 40px;">
-            <h1>404 Error</h1>
-            <p class="header-subtitle">Lost in harmony &bull; Página no encontrada</p>
+        <div class="subheader-content">
+            <h1>404</h1>
         </div>
+
+        <div style="height: 20px;"></div>
     </header>
 
     <main id="main-content">
-        <section class="error-page">
-            <div class="error-card">
-                <div class="error-code">404</div>
-                <h2>Oops! That Note Was Missed</h2>
-                <p>
-                    The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Let us help you find your way back to the choir!
+        <section class="error-section">
+            <div style="max-width: 600px; margin: 0 auto;">
+                <h2 style="font-family: 'Niagara'; font-size: 3rem; margin-bottom: 12px; color: #171717;">Page Not Found</h2>
+                <p class="description" style="margin-bottom: 28px;">
+                    The page you are looking for might have been moved or does not exist.
                 </p>
-                <div class="btn-group">
-                    <a href="index.html" class="btn btn-primary">
-                        <i class="fa-solid fa-house" aria-hidden="true"></i> Return to Homepage
-                    </a>
-                    <a href="news.html" class="btn btn-dark">
-                        <i class="fa-solid fa-play" aria-hidden="true"></i> Watch Concerts
-                    </a>
-                    <a href="contact.html" class="btn btn-outline-dark">
-                        <i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact Us
-                    </a>
-                </div>
+                <a href="index.html" class="minimal-cta-link">&larr; Return to Homepage</a>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer (Original Clean Minimalist Style) -->
     <footer class="footer" role="contentinfo">
-        <div class="footer-content">
-            <h2>CORO KUDYAPI</h2>
-            <p class="footer-desc">More than a choir, a family united. Promoting Philippine culture, music, and youth empowerment in Spain since 2004.</p>
-
-            <nav class="footer-nav" aria-label="Footer Navigation">
-                <a href="index.html">Home</a>
-                <a href="news.html">News & Concerts</a>
-                <a href="index.html#about">About Us</a>
-                <a href="faq.html">FAQ</a>
-                <a href="contact.html">Contact & Auditions</a>
-                <a href="privacy-policy.html">Privacy Policy</a>
-                <a href="terms.html">Terms of Service</a>
-            </nav>
-
-            <div class="icons">
-                <a href="https://www.facebook.com/kudyapichoir" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on Facebook">
-                    <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
-                </a>
-                <a href="https://www.instagram.com/kudyapichoir/" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on Instagram">
-                    <i class="fa-brands fa-instagram" aria-hidden="true"></i>
-                </a>
-                <a href="https://www.youtube.com/@kudyapichoirOfficial" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on YouTube">
-                    <i class="fa-brands fa-youtube" aria-hidden="true"></i>
-                </a>
-                <a href="https://www.tiktok.com/@kudyapichoir" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on TikTok">
-                    <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
-                </a>
-            </div>
-
-            <div class="footer-bottom">
-                <p class="footer-text">
-                    Copyright &copy; <span id="currentYear">2026</span> Coro Kudyapi. All rights reserved.
-                </p>
-                <div class="footer-legal-links">
-                    <a href="privacy-policy.html">Privacy Policy</a>
-                    <span>&bull;</span>
-                    <a href="terms.html">Terms of Use</a>
-                    <span>&bull;</span>
-                    <button type="button" data-open-cookie-settings>Cookie Preferences</button>
-                </div>
-            </div>
+        <h2>CORO KUDYAPI</h2>
+        <div class="icons">
+            <a href="https://www.facebook.com/kudyapichoir" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on Facebook">
+                <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/kudyapichoir/" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on Instagram">
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.youtube.com/@kudyapichoirOfficial" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on YouTube">
+                <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.tiktok.com/@kudyapichoir" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on TikTok">
+                <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+            </a>
         </div>
+
+        <div class="footer-nav-simple">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <span>&bull;</span>
+            <a href="terms.html">Terms</a>
+            <span>&bull;</span>
+            <button type="button" data-open-cookie-settings>Cookie Preferences</button>
+        </div>
+
+        <p class="footer-text">
+            Copyright &copy; <span id="year">2026</span> | Coro Kudyapi
+        </p>
     </footer>
 
-    <!-- Cookie Consent Banner -->
+    <!-- Minimalist Cookie Consent Banner -->
     <div id="cookieBanner" class="cookie-banner" role="region" aria-label="Cookie consent">
-        <div class="cookie-title"><i class="fa-solid fa-cookie-bite" aria-hidden="true"></i> Cookie Preferences</div>
         <p class="cookie-text">
-            We use cookies to analyze site traffic, optimize performance, and enhance your browsing experience. Read our <a href="privacy-policy.html">Privacy Policy</a> to learn more.
+            We use cookies to ensure optimal performance and analyze site visits. Read our <a href="privacy-policy.html">Privacy Policy</a>.
         </p>
         <div class="cookie-actions">
-            <button id="cookieAcceptAll" class="cookie-btn cookie-btn-primary" type="button">Accept All</button>
-            <button id="cookieReject" class="cookie-btn cookie-btn-secondary" type="button">Reject Non-Essential</button>
-            <button class="cookie-btn cookie-btn-text" type="button" data-open-cookie-settings>Preferences</button>
+            <button id="cookieAcceptAll" class="cookie-btn cookie-btn-primary" type="button">Accept</button>
+            <button id="cookieReject" class="cookie-btn cookie-btn-secondary" type="button">Reject</button>
+            <button class="cookie-btn cookie-btn-text" type="button" data-open-cookie-settings>Settings</button>
         </div>
     </div>
 
-    <!-- Cookie Settings Modal -->
-    <div id="cookieModal" class="cookie-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cookieModalTitle">
+    <!-- Minimalist Cookie Settings Modal -->
+    <div id="cookieModal" class="cookie-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="cookie-modal">
             <div class="cookie-modal-header">
-                <h3 id="cookieModalTitle">Cookie Settings</h3>
-                <button id="cookieCloseModal" class="cookie-modal-close" type="button" aria-label="Close settings">&times;</button>
+                <h3 id="modalTitle">Cookie Preferences</h3>
+                <button id="cookieCloseModal" class="cookie-modal-close" type="button" aria-label="Close">&times;</button>
             </div>
-            <div class="cookie-modal-body">
-                <div class="cookie-pref-item">
-                    <div class="cookie-pref-top">
-                        <span class="cookie-pref-title">Strictly Necessary Cookies</span>
-                        <span class="cookie-pref-status">Always Active</span>
-                    </div>
-                    <p class="cookie-pref-desc">These cookies are essential for the website to function properly, including security, network management, and accessibility preferences.</p>
+            <div class="cookie-pref-item">
+                <div class="cookie-pref-top">
+                    <span>Strictly Necessary</span>
+                    <span style="font-size: 0.82rem; color: #888;">Active</span>
                 </div>
-                <div class="cookie-pref-item">
-                    <div class="cookie-pref-top">
-                        <label for="cookiePrefAnalytics" class="cookie-pref-title" style="cursor: pointer;">Analytics & Performance Cookies</label>
-                        <input type="checkbox" id="cookiePrefAnalytics" style="width: 18px; height: 18px; accent-color: #C69644; cursor: pointer;">
-                    </div>
-                    <p class="cookie-pref-desc">Allows us to count visits and traffic sources so we can measure and improve the performance of our site, honoring user privacy.</p>
+                <p class="cookie-pref-desc">Required for basic website navigation and security.</p>
+            </div>
+            <div class="cookie-pref-item">
+                <div class="cookie-pref-top">
+                    <label for="cookiePrefAnalytics" style="cursor: pointer;">Analytics</label>
+                    <input type="checkbox" id="cookiePrefAnalytics" style="accent-color: #141414; width: 16px; height: 16px; cursor: pointer;">
                 </div>
+                <p class="cookie-pref-desc">Helps us understand visitor traffic anonymously.</p>
             </div>
             <div class="cookie-modal-footer">
                 <button id="cookieSavePref" class="cookie-btn cookie-btn-primary" type="button">Save Preferences</button>
@@ -186,7 +150,7 @@
 
     <script src="main.js"></script>
     <script>
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
 
