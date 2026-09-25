@@ -1,6 +1,282 @@
-// Coro Kudyapi - Unified Minimalist Video Player (1-Click Play for YouTube & HTML5 Video)
+/**
+ * Coro Kudyapi - Main JavaScript
+ * Handles:
+ * 1. Unified Minimalist Video Player (YouTube API & HTML5)
+ * 2. Mobile Responsive Navigation & Backdrop
+ * 3. Accessible FAQ Accordions
+ * 4. GDPR Cookie Consent Banner & Preferences Modal
+ * 5. Interactive Test Contact / Audition Form
+ * 6. Google Analytics 4 Consent Integration
+ */
 
-// Helper: Extract 11-char YouTube ID from any format (short URL, full URL, embed URL, or raw ID)
+// ==========================================================================
+// 1. Google Analytics 4 & Cookie Consent Management
+// ==========================================================================
+const COOKIE_STORAGE_KEY = 'coro_kudyapi_cookie_consent';
+
+function getStoredConsent() {
+    try {
+        const stored = localStorage.getItem(COOKIE_STORAGE_KEY);
+        return stored ? JSON.parse(stored) : null;
+    } catch (e) {
+        return null;
+    }
+}
+
+function saveConsent(consent) {
+    try {
+        localStorage.setItem(COOKIE_STORAGE_KEY, JSON.stringify(consent));
+    } catch (e) {
+        console.warn('Storage unavailable:', e);
+    }
+    applyConsent(consent);
+}
+
+function applyConsent(consent) {
+    if (typeof window.gtag === 'function') {
+        window.gtag('consent', 'update', {
+            analytics_storage: consent && consent.analytics ? 'granted' : 'denied'
+        });
+    }
+}
+
+function initCookieConsent() {
+    const banner = document.getElementById('cookieBanner');
+    const modalBackdrop = document.getElementById('cookieModal');
+    const acceptAllBtn = document.getElementById('cookieAcceptAll');
+    const rejectBtn = document.getElementById('cookieReject');
+    const openSettingsBtns = document.querySelectorAll('[data-open-cookie-settings]');
+    const savePrefBtn = document.getElementById('cookieSavePref');
+    const closeModalBtn = document.getElementById('cookieCloseModal');
+    const analyticsCheckbox = document.getElementById('cookiePrefAnalytics');
+
+    const consent = getStoredConsent();
+
+    if (!consent && banner) {
+        setTimeout(() => {
+            banner.classList.add('is-visible');
+        }, 600);
+    } else if (consent) {
+        applyConsent(consent);
+    }
+
+    if (acceptAllBtn) {
+        acceptAllBtn.addEventListener('click', () => {
+            saveConsent({ essential: true, analytics: true, timestamp: new Date().toISOString() });
+            if (banner) banner.classList.remove('is-visible');
+        });
+    }
+
+    if (rejectBtn) {
+        rejectBtn.addEventListener('click', () => {
+            saveConsent({ essential: true, analytics: false, timestamp: new Date().toISOString() });
+            if (banner) banner.classList.remove('is-visible');
+        });
+    }
+
+    const openModal = (e) => {
+        if (e) e.preventDefault();
+        const current = getStoredConsent() || { essential: true, analytics: false };
+        if (analyticsCheckbox) {
+            analyticsCheckbox.checked = !!current.analytics;
+        }
+        if (modalBackdrop) modalBackdrop.classList.add('is-visible');
+    };
+
+    const closeModal = () => {
+        if (modalBackdrop) modalBackdrop.classList.remove('is-visible');
+    };
+
+    openSettingsBtns.forEach(btn => {
+        btn.addEventListener('click', openModal);
+    });
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeModal);
+    }
+
+    if (modalBackdrop) {
+        modalBackdrop.addEventListener('click', (e) => {
+            if (e.target === modalBackdrop) closeModal();
+        });
+    }
+
+    if (savePrefBtn) {
+        savePrefBtn.addEventListener('click', () => {
+            const isAnalyticsAllowed = analyticsCheckbox ? analyticsCheckbox.checked : false;
+            saveConsent({
+                essential: true,
+                analytics: isAnalyticsAllowed,
+                timestamp: new Date().toISOString()
+            });
+            closeModal();
+            if (banner) banner.classList.remove('is-visible');
+        });
+    }
+}
+
+// ==========================================================================
+// 2. Mobile Responsive Navigation
+// ==========================================================================
+function initMobileNav() {
+    const toggleBtn = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const navOverlay = document.querySelector('.nav-overlay');
+
+    if (!toggleBtn || !navLinks) return;
+
+    function openNav() {
+        navLinks.classList.add('is-open');
+        if (navOverlay) navOverlay.classList.add('is-visible');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeNav() {
+        navLinks.classList.remove('is-open');
+        if (navOverlay) navOverlay.classList.remove('is-visible');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        const isOpen = navLinks.classList.contains('is-open');
+        if (isOpen) {
+            closeNav();
+        } else {
+            openNav();
+        }
+    });
+
+    if (navOverlay) {
+        navOverlay.addEventListener('click', closeNav);
+    }
+
+    // Close on navigation link click
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeNav);
+    });
+
+    // Close on Escape key press
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navLinks.classList.contains('is-open')) {
+            closeNav();
+            toggleBtn.focus();
+        }
+    });
+}
+
+// ==========================================================================
+// 3. Accessible FAQ Accordions
+// ==========================================================================
+function initFaqAccordions() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const questionBtn = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+
+        if (!questionBtn || !answer) return;
+
+        questionBtn.addEventListener('click', () => {
+            const isExpanded = questionBtn.getAttribute('aria-expanded') === 'true';
+
+            // Optional: Close others for accordion behavior
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('is-open');
+                    const otherBtn = otherItem.querySelector('.faq-question');
+                    const otherAns = otherItem.querySelector('.faq-answer');
+                    if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+                    if (otherAns) otherAns.hidden = true;
+                }
+            });
+
+            if (isExpanded) {
+                questionBtn.setAttribute('aria-expanded', 'false');
+                answer.hidden = true;
+                item.classList.remove('is-open');
+            } else {
+                questionBtn.setAttribute('aria-expanded', 'true');
+                answer.hidden = false;
+                item.classList.add('is-open');
+            }
+        });
+    });
+}
+
+// ==========================================================================
+// 4. Interactive Test Form (Contact & Audition)
+// ==========================================================================
+function initContactForm() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+
+    const feedback = document.getElementById('formFeedback');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Basic validation
+        if (!form.checkValidity()) {
+            if (feedback) {
+                feedback.className = 'form-feedback is-error';
+                feedback.textContent = 'Please fill out all required fields properly.';
+            }
+            return;
+        }
+
+        const nameInput = form.querySelector('[name="name"]');
+        const senderName = nameInput ? nameInput.value : 'friend';
+
+        // Submit state
+        const originalText = submitBtn ? submitBtn.innerHTML : 'Send Message';
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending message...';
+        }
+
+        setTimeout(() => {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+
+            if (feedback) {
+                feedback.className = 'form-feedback is-success';
+                feedback.innerHTML = `<strong>Thank you, ${escapeHtml(senderName)}!</strong> Your message has been received. A choir coordinator will get in touch with you shortly.`;
+            }
+
+            form.reset();
+
+            // Track form submission event if consent given
+            const consent = getStoredConsent();
+            if (consent && consent.analytics && typeof window.gtag === 'function') {
+                window.gtag('event', 'form_submission', {
+                    event_category: 'Contact',
+                    event_label: 'Audition & Contact Form'
+                });
+            }
+        }, 1200);
+    });
+}
+
+function escapeHtml(str) {
+    return str.replace(/[&<>'"]/g, 
+        tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+        }[tag] || tag)
+    );
+}
+
+// ==========================================================================
+// 5. Unified Minimalist Video Player (YouTube & HTML5 Video)
+// ==========================================================================
 function extractYouTubeId(urlOrId) {
     if (!urlOrId) return null;
     const trimmed = urlOrId.trim();
@@ -8,10 +284,8 @@ function extractYouTubeId(urlOrId) {
     return match ? (match[1] || match[0]) : null;
 }
 
-// Global registry of player instances
 const videoInstances = [];
 
-// Helper: Pause all other active video instances when a new one starts
 function pauseAllOtherVideos(activeBox) {
     videoInstances.forEach(instance => {
         if (instance.box !== activeBox) {
@@ -25,7 +299,6 @@ function pauseAllOtherVideos(activeBox) {
     });
 }
 
-// YouTube API readiness management
 let ytApiReady = false;
 const ytReadyCallbacks = [];
 
@@ -35,7 +308,6 @@ window.onYouTubeIframeAPIReady = function () {
     ytReadyCallbacks.length = 0;
 };
 
-// Dynamically inject YouTube IFrame API script
 (function loadYouTubeApi() {
     if (!window.YT) {
         const tag = document.createElement('script');
@@ -49,156 +321,162 @@ window.onYouTubeIframeAPIReady = function () {
     }
 })();
 
-// Initialize each video box
-document.querySelectorAll('.video-box').forEach((box, index) => {
-    const rawYt = box.dataset.youtubeId || box.dataset.youtubeUrl;
-    const ytId = extractYouTubeId(rawYt);
-    const video = box.querySelector('video.video-element');
-    const playBtn = box.querySelector('.play-btn');
+function initVideoPlayers() {
+    document.querySelectorAll('.video-box').forEach((box, index) => {
+        const rawYt = box.dataset.youtubeId || box.dataset.youtubeUrl;
+        const ytId = extractYouTubeId(rawYt);
+        const video = box.querySelector('video.video-element');
+        const playBtn = box.querySelector('.play-btn');
 
-    if (ytId) {
-        // --- YOUTUBE CONTAINER: PRELOADED BEHIND POSTER (SINGLE-CLICK PLAY) ---
-        // Hide dummy video element and convert poster to an <img> if needed
-        if (video) {
-            video.classList.add('yt-hidden');
-            const posterSrc = video.getAttribute('poster');
-            if (posterSrc && !box.querySelector('.video-poster')) {
-                const img = document.createElement('img');
-                img.className = 'video-poster';
-                img.src = posterSrc;
-                img.alt = box.dataset.videoTitle || 'Video poster';
-                box.insertBefore(img, box.querySelector('.video-overlay'));
+        if (ytId) {
+            if (video) {
+                video.classList.add('yt-hidden');
+                const posterSrc = video.getAttribute('poster');
+                if (posterSrc && !box.querySelector('.video-poster')) {
+                    const img = document.createElement('img');
+                    img.className = 'video-poster';
+                    img.src = posterSrc;
+                    img.alt = box.dataset.videoTitle || 'Video poster';
+                    box.insertBefore(img, box.querySelector('.video-overlay'));
+                }
             }
-        }
 
-        // Create mount container for YouTube IFrame
-        const mountDiv = document.createElement('div');
-        mountDiv.id = `yt-player-${index}-${Math.random().toString(36).substring(2, 7)}`;
-        box.prepend(mountDiv);
+            const mountDiv = document.createElement('div');
+            mountDiv.id = `yt-player-${index}-${Math.random().toString(36).substring(2, 7)}`;
+            box.prepend(mountDiv);
 
-        const instance = {
-            box,
-            type: 'youtube',
-            player: null,
-            isReady: false,
-            pendingPlay: false
-        };
-        videoInstances.push(instance);
+            const instance = {
+                box,
+                type: 'youtube',
+                player: null,
+                isReady: false,
+                pendingPlay: false
+            };
+            videoInstances.push(instance);
 
-        const initPlayer = () => {
-            instance.player = new YT.Player(mountDiv.id, {
-                videoId: ytId,
-                playerVars: {
-                    autoplay: 0,
-                    controls: 1,
-                    rel: 0,
-                    playsinline: 1,
-                    modestbranding: 1
-                },
-                events: {
-                    onReady: () => {
-                        instance.isReady = true;
-                        if (instance.pendingPlay) {
-                            instance.pendingPlay = false;
-                            pauseAllOtherVideos(box);
-                            instance.player.playVideo();
-                            box.classList.add('is-playing');
-                        }
+            const initPlayer = () => {
+                instance.player = new YT.Player(mountDiv.id, {
+                    videoId: ytId,
+                    playerVars: {
+                        autoplay: 0,
+                        controls: 1,
+                        rel: 0,
+                        playsinline: 1,
+                        modestbranding: 1
                     },
-                    onStateChange: (event) => {
-                        if (event.data === YT.PlayerState.PLAYING) {
-                            box.classList.add('is-playing');
-                        } else if (event.data === YT.PlayerState.ENDED) {
-                            box.classList.remove('is-playing');
+                    events: {
+                        onReady: () => {
+                            instance.isReady = true;
+                            if (instance.pendingPlay) {
+                                instance.pendingPlay = false;
+                                pauseAllOtherVideos(box);
+                                instance.player.playVideo();
+                                box.classList.add('is-playing');
+                            }
+                        },
+                        onStateChange: (event) => {
+                            if (event.data === YT.PlayerState.PLAYING) {
+                                box.classList.add('is-playing');
+                            } else if (event.data === YT.PlayerState.ENDED) {
+                                box.classList.remove('is-playing');
+                            }
                         }
                     }
+                });
+            };
+
+            if (ytApiReady) {
+                initPlayer();
+            } else {
+                ytReadyCallbacks.push(initPlayer);
+            }
+
+            const handlePlay = (e) => {
+                if (e) e.stopPropagation();
+                pauseAllOtherVideos(box);
+                box.classList.add('is-playing');
+
+                if (instance.isReady && instance.player && typeof instance.player.playVideo === 'function') {
+                    instance.player.playVideo();
+                } else {
+                    instance.pendingPlay = true;
+                }
+            };
+
+            if (playBtn) {
+                playBtn.addEventListener('click', handlePlay);
+            }
+
+            box.addEventListener('click', (e) => {
+                if (!box.classList.contains('is-playing')) {
+                    handlePlay(e);
                 }
             });
-        };
 
-        if (ytApiReady) {
-            initPlayer();
-        } else {
-            ytReadyCallbacks.push(initPlayer);
-        }
+        } else if (video) {
+            const instance = {
+                box,
+                type: 'html5',
+                video
+            };
+            videoInstances.push(instance);
 
-        // Single integrated click handler:
-        const handlePlay = (e) => {
-            if (e) e.stopPropagation();
-            pauseAllOtherVideos(box);
-            box.classList.add('is-playing');
+            const hasSource = video.currentSrc || (video.querySelector('source') && video.querySelector('source').getAttribute('src'));
 
-            if (instance.isReady && instance.player && typeof instance.player.playVideo === 'function') {
-                instance.player.playVideo();
-            } else {
-                // If API is still finishing initialization, queue playback immediately
-                instance.pendingPlay = true;
-            }
-        };
+            const handlePlay = (e) => {
+                if (e) e.stopPropagation();
+                pauseAllOtherVideos(box);
 
-        if (playBtn) {
-            playBtn.addEventListener('click', handlePlay);
-        }
-
-        box.addEventListener('click', (e) => {
-            if (!box.classList.contains('is-playing')) {
-                handlePlay(e);
-            }
-        });
-
-    } else if (video) {
-        // --- HTML5 LOCAL VIDEO CONTAINER ---
-        const instance = {
-            box,
-            type: 'html5',
-            video
-        };
-        videoInstances.push(instance);
-
-        const hasSource = video.currentSrc || (video.querySelector('source') && video.querySelector('source').getAttribute('src'));
-
-        const handlePlay = (e) => {
-            if (e) e.stopPropagation();
-            pauseAllOtherVideos(box);
-
-            if (hasSource) {
-                video.play().then(() => {
-                    video.setAttribute('controls', 'true');
-                    box.classList.add('is-playing');
-                }).catch(err => {
-                    console.log('Playback error:', err);
-                });
-            } else {
-                box.classList.toggle('is-playing');
-                if (box.classList.contains('is-playing')) {
-                    video.setAttribute('controls', 'true');
+                if (hasSource) {
+                    video.play().then(() => {
+                        video.setAttribute('controls', 'true');
+                        box.classList.add('is-playing');
+                    }).catch(err => {
+                        console.log('Playback error:', err);
+                    });
                 } else {
-                    video.removeAttribute('controls');
+                    box.classList.toggle('is-playing');
+                    if (box.classList.contains('is-playing')) {
+                        video.setAttribute('controls', 'true');
+                    } else {
+                        video.removeAttribute('controls');
+                    }
                 }
-            }
-        };
+            };
 
-        if (playBtn) {
-            playBtn.addEventListener('click', handlePlay);
+            if (playBtn) {
+                playBtn.addEventListener('click', handlePlay);
+            }
+
+            box.addEventListener('click', (e) => {
+                if (!box.classList.contains('is-playing')) {
+                    handlePlay(e);
+                }
+            });
+
+            video.addEventListener('play', () => {
+                box.classList.add('is-playing');
+            });
+
+            video.addEventListener('pause', () => {
+                box.classList.remove('is-playing');
+            });
+
+            video.addEventListener('ended', () => {
+                box.classList.remove('is-playing');
+                video.removeAttribute('controls');
+            });
         }
+    });
+}
 
-        box.addEventListener('click', (e) => {
-            if (!box.classList.contains('is-playing')) {
-                handlePlay(e);
-            }
-        });
-
-        video.addEventListener('play', () => {
-            box.classList.add('is-playing');
-        });
-
-        video.addEventListener('pause', () => {
-            box.classList.remove('is-playing');
-        });
-
-        video.addEventListener('ended', () => {
-            box.classList.remove('is-playing');
-            video.removeAttribute('controls');
-        });
-    }
+// ==========================================================================
+// Initialization on DOM Ready
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    initMobileNav();
+    initCookieConsent();
+    initFaqAccordions();
+    initContactForm();
+    initVideoPlayers();
 });
