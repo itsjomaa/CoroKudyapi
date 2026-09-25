@@ -147,12 +147,14 @@ main {
 }
 
 .brand-logo img {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     object-fit: contain;
-    border: 2px solid rgba(212, 175, 55, 0.8);
-    background-color: #141414;
+    border: 2px solid var(--color-gold);
+    background-color: #ffffff;
+    padding: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .nav-links {
