@@ -137,14 +137,14 @@ body {
     text-align: center;
     padding: clamp(120px, 28vh, 250px) 20px;
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 0 10rem 10.5rem 14rem;
 }
 
 .header-content h1 {
     font-family: "Adelia";
     font-size: clamp(3.5rem, 8.5vw, 6.2rem);
     color: #ffffff;
-    opacity: 0.9;
+    opacity: 0.8;
     letter-spacing: 1px;
     line-height: 1.1;
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
@@ -870,7 +870,7 @@ body {
     padding: 22px 24px;
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 
+    box-shadow:
         0 20px 48px -10px rgba(0, 0, 0, 0.12),
         inset 0 1px 1px 0 rgba(255, 255, 255, 0.95),
         inset 0 -1px 1px 0 rgba(0, 0, 0, 0.03);
@@ -879,8 +879,8 @@ body {
     visibility: hidden;
     transform: translateY(20px) scale(0.97);
     transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                visibility 0.35s ease;
+        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.35s ease;
     font-size: 0.88rem;
     line-height: 1.55;
 }
@@ -1013,7 +1013,7 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                visibility 0.35s ease;
+        visibility 0.35s ease;
 }
 
 .cookie-modal-backdrop.is-visible {
@@ -1030,7 +1030,7 @@ body {
     width: 100%;
     border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 
+    box-shadow:
         0 30px 70px -15px rgba(0, 0, 0, 0.22),
         inset 0 1px 1px 0 rgba(255, 255, 255, 1);
     padding: 30px 32px;
@@ -1173,7 +1173,7 @@ body {
     background-color: rgba(0, 0, 0, 0.16);
     border: 1px solid rgba(0, 0, 0, 0.08);
     transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     border-radius: 24px;
 }
 
@@ -1190,17 +1190,17 @@ body {
     border-radius: 50%;
 }
 
-.switch-input:checked + .switch-slider {
+.switch-input:checked+.switch-slider {
     background-color: #141414;
     border-color: #141414;
 }
 
-.switch-input:focus-visible + .switch-slider {
+.switch-input:focus-visible+.switch-slider {
     outline: 2px solid #141414;
     outline-offset: 2px;
 }
 
-.switch-input:checked + .switch-slider:before {
+.switch-input:checked+.switch-slider:before {
     transform: translateX(20px);
 }
 
@@ -1287,8 +1287,15 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .cookie-table-wrapper {
