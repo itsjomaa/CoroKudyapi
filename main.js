@@ -49,10 +49,12 @@ function initCookieConsent() {
     const savePrefBtn = document.getElementById('cookieSavePref');
     const closeModalBtn = document.getElementById('cookieCloseModal');
     const analyticsCheckbox = document.getElementById('cookiePrefAnalytics');
+    const functionalCheckbox = document.getElementById('cookiePrefFunctional');
 
     const consent = getStoredConsent();
+    const isPreferencesPage = window.location.pathname.includes('cookie-preferences.html');
 
-    if (!consent && banner) {
+    if (!consent && banner && !isPreferencesPage) {
         setTimeout(() => {
             banner.classList.add('is-visible');
         }, 600);
@@ -62,23 +64,26 @@ function initCookieConsent() {
 
     if (acceptAllBtn) {
         acceptAllBtn.addEventListener('click', () => {
-            saveConsent({ essential: true, analytics: true, timestamp: new Date().toISOString() });
+            saveConsent({ essential: true, analytics: true, functional: true, timestamp: new Date().toISOString() });
             if (banner) banner.classList.remove('is-visible');
         });
     }
 
     if (rejectBtn) {
         rejectBtn.addEventListener('click', () => {
-            saveConsent({ essential: true, analytics: false, timestamp: new Date().toISOString() });
+            saveConsent({ essential: true, analytics: false, functional: false, timestamp: new Date().toISOString() });
             if (banner) banner.classList.remove('is-visible');
         });
     }
 
     const openModal = (e) => {
         if (e) e.preventDefault();
-        const current = getStoredConsent() || { essential: true, analytics: false };
+        const current = getStoredConsent() || { essential: true, analytics: false, functional: true };
         if (analyticsCheckbox) {
             analyticsCheckbox.checked = !!current.analytics;
+        }
+        if (functionalCheckbox) {
+            functionalCheckbox.checked = current.functional !== false;
         }
         if (modalBackdrop) modalBackdrop.classList.add('is-visible');
     };
@@ -99,17 +104,101 @@ function initCookieConsent() {
         modalBackdrop.addEventListener('click', (e) => {
             if (e.target === modalBackdrop) closeModal();
         });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalBackdrop.classList.contains('is-visible')) {
+                closeModal();
+            }
+        });
     }
 
     if (savePrefBtn) {
         savePrefBtn.addEventListener('click', () => {
             const isAnalyticsAllowed = analyticsCheckbox ? analyticsCheckbox.checked : false;
+            const isFunctionalAllowed = functionalCheckbox ? functionalCheckbox.checked : true;
             saveConsent({
                 essential: true,
                 analytics: isAnalyticsAllowed,
+                functional: isFunctionalAllowed,
                 timestamp: new Date().toISOString()
             });
             closeModal();
+            if (banner) banner.classList.remove('is-visible');
+        });
+    }
+}
+
+function initCookiePreferencesPage() {
+    const analyticsCheckbox = document.getElementById('pageCookieAnalytics');
+    const functionalCheckbox = document.getElementById('pageCookieFunctional');
+    const saveBtn = document.getElementById('pageCookieSave');
+    const acceptAllBtn = document.getElementById('pageCookieAcceptAll');
+    const rejectBtn = document.getElementById('pageCookieReject');
+    const feedbackBanner = document.getElementById('pageFeedback');
+
+    if (!saveBtn && !analyticsCheckbox) return;
+
+    const showFeedback = (msg) => {
+        if (!feedbackBanner) return;
+        feedbackBanner.innerHTML = `<i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span>${msg}</span>`;
+        feedbackBanner.hidden = false;
+        feedbackBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        setTimeout(() => {
+            if (feedbackBanner) feedbackBanner.hidden = true;
+        }, 5000);
+    };
+
+    const current = getStoredConsent() || { essential: true, analytics: false, functional: true };
+    if (analyticsCheckbox) {
+        analyticsCheckbox.checked = !!current.analytics;
+    }
+    if (functionalCheckbox) {
+        functionalCheckbox.checked = current.functional !== false;
+    }
+
+    if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+            const analytics = analyticsCheckbox ? analyticsCheckbox.checked : false;
+            const functional = functionalCheckbox ? functionalCheckbox.checked : true;
+            saveConsent({
+                essential: true,
+                analytics: analytics,
+                functional: functional,
+                timestamp: new Date().toISOString()
+            });
+            showFeedback('Your cookie preferences have been saved successfully.');
+            const banner = document.getElementById('cookieBanner');
+            if (banner) banner.classList.remove('is-visible');
+        });
+    }
+
+    if (acceptAllBtn) {
+        acceptAllBtn.addEventListener('click', () => {
+            if (analyticsCheckbox) analyticsCheckbox.checked = true;
+            if (functionalCheckbox) functionalCheckbox.checked = true;
+            saveConsent({
+                essential: true,
+                analytics: true,
+                functional: true,
+                timestamp: new Date().toISOString()
+            });
+            showFeedback('All cookies have been accepted.');
+            const banner = document.getElementById('cookieBanner');
+            if (banner) banner.classList.remove('is-visible');
+        });
+    }
+
+    if (rejectBtn) {
+        rejectBtn.addEventListener('click', () => {
+            if (analyticsCheckbox) analyticsCheckbox.checked = false;
+            if (functionalCheckbox) functionalCheckbox.checked = false;
+            saveConsent({
+                essential: true,
+                analytics: false,
+                functional: false,
+                timestamp: new Date().toISOString()
+            });
+            showFeedback('Non-essential cookies have been disabled.');
+            const banner = document.getElementById('cookieBanner');
             if (banner) banner.classList.remove('is-visible');
         });
     }
@@ -476,6 +565,7 @@ function initVideoPlayers() {
 document.addEventListener('DOMContentLoaded', () => {
     initMobileNav();
     initCookieConsent();
+    initCookiePreferencesPage();
     initFaqAccordions();
     initContactForm();
     initVideoPlayers();
