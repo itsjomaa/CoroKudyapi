@@ -1,0 +1,419 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', 'Montserrat', sans-serif;
+    background-color: #FFFBF6;
+}
+
+@font-face {
+    font-family: "Adelia";
+    src: url("fonts/adelia.ttf")
+}
+
+@font-face {
+    font-family: "Niagara";
+    src: url("fonts/Niagara.ttf")
+}
+
+.header {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3),
+            rgba(98, 98, 98, 0.3)), url(images/portada-kudyapi.jpg);
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.sub-header {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3),
+            rgba(98, 98, 98, 0.3)), url(images/subportada-kudyapi.jpg);
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.subheader-content {
+    text-align: center;
+    padding: 80px;
+}
+
+.subheader-content h1 {
+    font-family: "Adelia";
+    font-size: 6rem;
+    color: white;
+    margin-top: 2%;
+    opacity: 0.8;
+}
+
+.header-content {
+    text-align: center;
+    padding: 250px;
+}
+
+.header-content h1 {
+    font-family: "Adelia";
+    font-size: 6rem;
+    color: white;
+    margin-top: 4%;
+    opacity: 0.8;
+}
+
+.nav-links {
+    flex: 1;
+    text-align: center;
+    padding-top: 2%;
+}
+
+.nav-links ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 8px 12px;
+    position: relative;
+}
+
+.nav-links ul li a {
+    color: #f2f2f2;
+    text-decoration: none;
+    font-size: 16px;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+.nav-links ul li a:hover {
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.tagline {
+    text-align: center;
+    font-family: "Adelia";
+    font-size: 1.3rem;
+    color: #141414;
+    font-weight: 500;
+    padding: 35px 20px 15px;
+    background-color: #FFFBF6;
+}
+
+.about-me {
+    background-color: #FFFBF6;
+    padding: 25px 20px 80px;
+}
+
+.about-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.about-image {
+    flex: 1;
+    max-width: 50%;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.about-content {
+    flex: 1;
+    max-width: 50%;
+}
+
+.about-content h2 {
+    font-family: "Niagara";
+    font-size: 3.5rem;
+    color: #171717;
+    margin-bottom: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.2rem;
+}
+
+.description {
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+}
+
+.description:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 850px) {
+    .tagline {
+        padding: 25px 15px 10px;
+    }
+
+    .about-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .about-image,
+    .about-content {
+        max-width: 100%;
+    }
+
+    .about-me {
+        padding: 15px 20px 50px;
+    }
+}
+
+/*News */
+
+.news {
+    background-color: #FFFBF6;
+    padding: 25px 20px 80px;
+}
+
+.news-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.Title-N {
+    font-family: "Niagara";
+    font-size: 4rem;
+    color: #303030;
+    margin-top: 2rem;
+    font-weight: 500;
+    letter-spacing: 0.2;
+}
+
+.news-intro {
+    font-size: 1.05rem;
+    color: #555555;
+    line-height: 1.6;
+    margin-top: 0.5rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Minimalist Video Grid (2 columns x 2 rows) */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 30px;
+    width: 100%;
+}
+
+.video-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+}
+
+.video-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #121212;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* YouTube and iframe embedding */
+.video-box iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+    z-index: 1;
+}
+
+.video-element,
+.video-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, opacity 0.35s ease;
+    z-index: 2;
+}
+
+.video-card:hover .video-element,
+.video-card:hover .video-poster {
+    transform: scale(1.02);
+}
+
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.45) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.35s ease, background 0.3s ease;
+    z-index: 3;
+}
+
+.video-box:hover .video-overlay {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* Minimalist Play Button */
+.play-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #ffffff;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 3px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 4;
+}
+
+.video-box:hover .play-btn {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.95);
+    color: #1a1a1a;
+    border-color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.video-duration {
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    z-index: 4;
+}
+
+/* Video Information */
+.video-info {
+    padding: 20px 22px 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.video-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.video-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #8c7355;
+}
+
+.video-date {
+    font-size: 0.8rem;
+    color: #888888;
+}
+
+.video-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.35;
+    margin-bottom: 8px;
+}
+
+.video-desc {
+    font-size: 0.88rem;
+    color: #666666;
+    line-height: 1.55;
+    margin-bottom: 0;
+}
+
+/* State when playing: hide overlay, play button, and placeholder/poster */
+.video-box.is-playing .video-overlay,
+.video-box.is-playing .video-poster,
+.video-box.is-playing .yt-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (max-width: 850px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+        gap: 26px;
+    }
+
+    .video-info {
+        padding: 16px 18px 20px;
+    }
+}
+
+/*footer*/
+.footer {
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 10%;
+}
+
+.footer h2 {
+    margin-bottom: 2rem;
+    font-weight: 600;
+    color: #1f1e1e;
+    font-family: "Adelia";
+}
+
+.icons .fa-brands {
+    color: #1f1e1e;
+    margin: 0 13px;
+    cursor: pointer;
+    padding: 18px 0;
+    font-size: 20px;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.footer-text {
+    color: #1f1e1e;
+}
+
+.icons .fa-brands:hover {
+    opacity: 1;
+}
