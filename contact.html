@@ -29,14 +29,16 @@
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&family=Oswald:wght@500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&family=Oswald:wght@500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 
     <!-- Google Analytics (GA4) with Consent Mode -->
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('consent', 'default', {
             'analytics_storage': 'denied',
             'ad_storage': 'denied'
@@ -55,7 +57,8 @@
 
     <!-- Sub-Header (Original Minimalist Design) -->
     <header class="sub-header" role="banner">
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mainNav">
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false"
+            aria-controls="mainNav">
             <i class="fa-solid fa-bars" aria-hidden="true"></i>
         </button>
 
@@ -81,25 +84,34 @@
             <div class="contact-container">
                 <h2 id="contactTitle" class="page-title">Send a Message</h2>
                 <p class="description">
-                    For inquiries about auditions (ages 5 to 23), festival and concert bookings, or supporting the choir, please get in touch below. You can also reach us via email at <a href="mailto:info@corokudyapi.com" style="color: #141414; font-weight: 600;">info@corokudyapi.com</a>.
+                    For inquiries about auditions (ages 5 to 23), festival and concert bookings, or supporting the
+                    choir, please get in touch below. You can also reach us via email at <a
+                        href="mailto:info@corokudyapi.com"
+                        style="color: #141414; font-weight: 600;">corokudyapi@gmail.com</a>.
                 </p>
 
                 <div class="contact-form">
                     <div id="formFeedback" class="form-feedback" role="alert" aria-live="polite"></div>
 
-                    <form id="contactForm" novalidate aria-label="Contact and Audition Form">
+                    <form id="contactForm" novalidate aria-label="Contact and Audition Form"
+                        action="https://formspree.io/f/xeaolldg" method="POST">
                         <div class="form-group">
-                            <label for="userName" class="form-label">Name <span class="required" aria-hidden="true">*</span></label>
-                            <input type="text" id="userName" name="name" class="form-control" required autocomplete="name" placeholder="Your name">
+                            <label for="userName" class="form-label">Name <span class="required"
+                                    aria-hidden="true">*</span></label>
+                            <input type="text" id="userName" name="name" class="form-control" required
+                                autocomplete="name" placeholder="Your name">
                         </div>
 
                         <div class="form-group">
-                            <label for="userEmail" class="form-label">Email <span class="required" aria-hidden="true">*</span></label>
-                            <input type="email" id="userEmail" name="email" class="form-control" required autocomplete="email" placeholder="Your email address">
+                            <label for="userEmail" class="form-label">Email <span class="required"
+                                    aria-hidden="true">*</span></label>
+                            <input type="email" id="userEmail" name="email" class="form-control" required
+                                autocomplete="email" placeholder="Your email address">
                         </div>
 
                         <div class="form-group">
-                            <label for="inquiryType" class="form-label">Purpose <span class="required" aria-hidden="true">*</span></label>
+                            <label for="inquiryType" class="form-label">Purpose <span class="required"
+                                    aria-hidden="true">*</span></label>
                             <select id="inquiryType" name="inquiryType" class="form-control" required>
                                 <option value="" disabled selected>-- Select an option --</option>
                                 <option value="audition">Choir Audition (Youth Ages 5 - 23)</option>
@@ -109,14 +121,18 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="userMessage" class="form-label">Message <span class="required" aria-hidden="true">*</span></label>
-                            <textarea id="userMessage" name="message" class="form-control" rows="5" required placeholder="Tell us about yourself or your event..."></textarea>
+                            <label for="userMessage" class="form-label">Message <span class="required"
+                                    aria-hidden="true">*</span></label>
+                            <textarea id="userMessage" name="message" class="form-control" rows="5" required
+                                placeholder="Tell us about yourself or your event..."></textarea>
                         </div>
 
                         <div class="form-group">
                             <label class="form-checkbox-label">
                                 <input type="checkbox" id="privacyConsent" name="privacyConsent" required>
-                                <span>I agree to the processing of my message according to the <a href="privacy-policy.html" target="_blank" style="color:#141414; text-decoration: underline;">Privacy Policy</a>.</span>
+                                <span>I agree to the processing of my message according to the <a
+                                        href="privacy-policy.html" target="_blank"
+                                        style="color:#141414; text-decoration: underline;">Privacy Policy</a>.</span>
                             </label>
                         </div>
 
@@ -124,6 +140,50 @@
                             Send Message
                         </button>
                     </form>
+
+                    <script>
+                        const form = document.getElementById('contactForm');
+                        const feedback = document.getElementById('formFeedback');
+
+                        form.addEventListener('submit', async function (e) {
+                            e.preventDefault();
+
+                            // Basic HTML5 validation
+                            if (!form.checkValidity()) {
+                                form.reportValidity();
+                                return;
+                            }
+
+                            const submitBtn = form.querySelector('.btn-submit');
+                            submitBtn.disabled = true;
+                            submitBtn.textContent = 'Sending...';
+
+                            const data = new FormData(form);
+
+                            try {
+                                const response = await fetch(form.action, {
+                                    method: 'POST',
+                                    body: data,
+                                    headers: { 'Accept': 'application/json' }
+                                });
+
+                                if (response.ok) {
+                                    feedback.innerHTML = '<p style="color: green; font-weight: 600;">✅ Message sent! We\'ll get back to you soon.</p>';
+                                    form.reset();
+                                } else {
+                                    const json = await response.json();
+                                    const errorMsg = json.errors ? json.errors.map(e => e.message).join(', ') : 'Something went wrong.';
+                                    feedback.innerHTML = `<p style="color: red; font-weight: 600;">❌ ${errorMsg}</p>`;
+                                }
+                            } catch (err) {
+                                feedback.innerHTML = '<p style="color: red; font-weight: 600;">❌ Network error. Please try again later.</p>';
+                            } finally {
+                                submitBtn.disabled = false;
+                                submitBtn.textContent = 'Send Message';
+                                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </section>
@@ -133,16 +193,20 @@
     <footer class="footer" role="contentinfo">
         <h2>CORO KUDYAPI</h2>
         <div class="icons">
-            <a href="https://www.facebook.com/kudyapichoir" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on Facebook">
+            <a href="https://www.facebook.com/kudyapichoir" target="_blank" rel="noopener noreferrer"
+                aria-label="Coro Kudyapi on Facebook">
                 <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
             </a>
-            <a href="https://www.instagram.com/kudyapichoir/" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on Instagram">
+            <a href="https://www.instagram.com/kudyapichoir/" target="_blank" rel="noopener noreferrer"
+                aria-label="Coro Kudyapi on Instagram">
                 <i class="fa-brands fa-instagram" aria-hidden="true"></i>
             </a>
-            <a href="https://www.youtube.com/@kudyapichoirOfficial" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on YouTube">
+            <a href="https://www.youtube.com/@kudyapichoirOfficial" target="_blank" rel="noopener noreferrer"
+                aria-label="Coro Kudyapi on YouTube">
                 <i class="fa-brands fa-youtube" aria-hidden="true"></i>
             </a>
-            <a href="https://www.tiktok.com/@kudyapichoir" target="_blank" rel="noopener noreferrer" aria-label="Coro Kudyapi on TikTok">
+            <a href="https://www.tiktok.com/@kudyapichoir" target="_blank" rel="noopener noreferrer"
+                aria-label="Coro Kudyapi on TikTok">
                 <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
             </a>
         </div>
@@ -163,7 +227,8 @@
     <!-- Minimalist Cookie Consent Banner -->
     <div id="cookieBanner" class="cookie-banner" role="region" aria-label="Cookie consent">
         <p class="cookie-text">
-            We use cookies to ensure optimal performance and analyze site visits. Read our <a href="privacy-policy.html">Privacy Policy</a>.
+            We use cookies to ensure optimal performance and analyze site visits. Read our <a
+                href="privacy-policy.html">Privacy Policy</a>.
         </p>
         <div class="cookie-actions">
             <button id="cookieAcceptAll" class="cookie-btn cookie-btn-primary" type="button">Accept</button>
@@ -177,7 +242,8 @@
         <div class="cookie-modal">
             <div class="cookie-modal-header">
                 <h3 id="modalTitle">Cookie Preferences</h3>
-                <button id="cookieCloseModal" class="cookie-modal-close" type="button" aria-label="Close">&times;</button>
+                <button id="cookieCloseModal" class="cookie-modal-close" type="button"
+                    aria-label="Close">&times;</button>
             </div>
             <div class="cookie-pref-item">
                 <div class="cookie-pref-top">
@@ -189,12 +255,14 @@
             <div class="cookie-pref-item">
                 <div class="cookie-pref-top">
                     <label for="cookiePrefAnalytics" style="cursor: pointer;">Analytics</label>
-                    <input type="checkbox" id="cookiePrefAnalytics" style="accent-color: #141414; width: 16px; height: 16px; cursor: pointer;">
+                    <input type="checkbox" id="cookiePrefAnalytics"
+                        style="accent-color: #141414; width: 16px; height: 16px; cursor: pointer;">
                 </div>
                 <p class="cookie-pref-desc">Helps us understand visitor traffic anonymously.</p>
             </div>
             <div class="cookie-modal-footer">
-                <button id="cookieSavePref" class="cookie-btn cookie-btn-primary" type="button">Save Preferences</button>
+                <button id="cookieSavePref" class="cookie-btn cookie-btn-primary" type="button">Save
+                    Preferences</button>
             </div>
         </div>
     </div>
